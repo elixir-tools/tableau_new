@@ -6,7 +6,7 @@ defmodule TableauNew.MixProject do
     [
       app: :tableau_new,
       description: "Project generator for Tableau",
-      version: "0.1.0",
+      version: "1.0.0",
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
