@@ -46,6 +46,7 @@ defmodule Mix.Tasks.Tableau.New do
     end
 
     [app | _] = argv
+    Mix.Generator.create_directory(app)
     templates = Path.join(:code.priv_dir(:tableau_new), "templates")
 
     for source <- Path.wildcard(Path.join(templates, "primary/**/*.{ex,exs}")) do
@@ -60,7 +61,7 @@ defmodule Mix.Tasks.Tableau.New do
         assets: opts[:assets]
       ]
 
-      Mix.Generator.copy_template(source, target, assigns)
+      Mix.Generator.copy_template(source, Path.join(app, target), assigns)
     end
 
     cond do
@@ -77,7 +78,7 @@ defmodule Mix.Tasks.Tableau.New do
             assets: opts[:assets]
           ]
 
-          Mix.Generator.copy_template(source, target, assigns)
+          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
       opts[:template] == "heex" ->
@@ -93,7 +94,7 @@ defmodule Mix.Tasks.Tableau.New do
             assets: opts[:assets]
           ]
 
-          Mix.Generator.copy_template(source, target, assigns)
+          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
       opts[:template] == "eex" ->
@@ -109,7 +110,7 @@ defmodule Mix.Tasks.Tableau.New do
             assets: opts[:assets]
           ]
 
-          Mix.Generator.copy_template(source, target, assigns)
+          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
       true ->
@@ -131,7 +132,7 @@ defmodule Mix.Tasks.Tableau.New do
             assets: opts[:assets]
           ]
 
-          Mix.Generator.copy_template(source, target, assigns)
+          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
       opts[:assets] in ["vanilla", nil] ->
@@ -147,7 +148,7 @@ defmodule Mix.Tasks.Tableau.New do
             assets: opts[:assets]
           ]
 
-          Mix.Generator.copy_template(source, target, assigns)
+          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
       true ->
