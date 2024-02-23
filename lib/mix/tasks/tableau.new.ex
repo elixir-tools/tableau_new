@@ -49,17 +49,35 @@ defmodule Mix.Tasks.Tableau.New do
     Mix.Generator.create_directory(app)
     templates = Path.join(:code.priv_dir(:tableau_new), "templates")
 
+    assigns = [
+      app: app,
+      app_module: Macro.camelize(app),
+      template: opts[:template],
+      assets: opts[:assets]
+    ]
+
+    Mix.Generator.copy_template(
+      Path.join(templates, "primary/README.md"),
+      Path.join(app, "README.md"),
+      assigns
+    )
+
+    Mix.Generator.copy_template(
+      Path.join(templates, "primary/gitignore"),
+      Path.join(app, ".gitignore"),
+      assigns
+    )
+
+    Mix.Generator.copy_template(
+      Path.join(templates, "primary/formatter.exs"),
+      Path.join(app, ".formatter.exs"),
+      assigns
+    )
+
     for source <- Path.wildcard(Path.join(templates, "primary/**/*.{ex,exs}")) do
       target =
         Path.relative_to(source, Path.join(templates, "primary"))
         |> String.replace("app_name", app)
-
-      assigns = [
-        app: app,
-        app_module: Macro.camelize(app),
-        template: opts[:template],
-        assets: opts[:assets]
-      ]
 
       Mix.Generator.copy_template(source, Path.join(app, target), assigns)
     end
@@ -71,13 +89,6 @@ defmodule Mix.Tasks.Tableau.New do
             Path.relative_to(source, Path.join(templates, "temple"))
             |> String.replace("app_name", app)
 
-          assigns = [
-            app: app,
-            app_module: Macro.camelize(app),
-            template: opts[:template],
-            assets: opts[:assets]
-          ]
-
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
@@ -87,13 +98,6 @@ defmodule Mix.Tasks.Tableau.New do
             Path.relative_to(source, Path.join(templates, "heex"))
             |> String.replace("app_name", app)
 
-          assigns = [
-            app: app,
-            app_module: Macro.camelize(app),
-            template: opts[:template],
-            assets: opts[:assets]
-          ]
-
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
@@ -102,13 +106,6 @@ defmodule Mix.Tasks.Tableau.New do
           target =
             Path.relative_to(source, Path.join(templates, "eex"))
             |> String.replace("app_name", app)
-
-          assigns = [
-            app: app,
-            app_module: Macro.camelize(app),
-            template: opts[:template],
-            assets: opts[:assets]
-          ]
 
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
@@ -125,13 +122,6 @@ defmodule Mix.Tasks.Tableau.New do
             Path.relative_to(source, Path.join(templates, "tailwind"))
             |> String.replace("app_name", app)
 
-          assigns = [
-            app: app,
-            app_module: Macro.camelize(app),
-            template: opts[:template],
-            assets: opts[:assets]
-          ]
-
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
@@ -140,13 +130,6 @@ defmodule Mix.Tasks.Tableau.New do
           target =
             Path.relative_to(source, Path.join(templates, "no_assets"))
             |> String.replace("app_name", app)
-
-          assigns = [
-            app: app,
-            app_module: Macro.camelize(app),
-            template: opts[:template],
-            assets: opts[:assets]
-          ]
 
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
