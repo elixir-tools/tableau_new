@@ -4,9 +4,10 @@ defmodule Mix.Tasks.Tableau.New do
 
   Flags
 
-  --template Template syntax to use. Options are heex, temple, eex. (required)
-  --assets   Asset framework to use. Options are vanilla, tailwind. (optional, defaults to vanilla)
-  --help     Shows this help text.
+  --template    Template syntax to use. Options are heex, temple, eex. (required)
+  --assets      Asset framework to use. Options are vanilla, tailwind. (optional, defaults to vanilla)
+  --help        Shows this help text.
+  --version     Shows task version.
 
   Example
 
@@ -25,12 +26,13 @@ defmodule Mix.Tasks.Tableau.New do
         strict: [
           assets: :string,
           template: :string,
-          help: :boolean
+          help: :boolean,
+          version: :boolean
         ]
       )
 
     opts =
-      case Keyword.validate(opts, [:assets, :template, help: false]) do
+      case Keyword.validate(opts, [:assets, :template, help: false, version: false]) do
         {:ok, opts} ->
           opts
 
@@ -41,6 +43,12 @@ defmodule Mix.Tasks.Tableau.New do
 
     if opts[:help] do
       Mix.shell().info(@help)
+
+      System.halt(0)
+    end
+
+    if opts[:version] do
+      Mix.shell().info(Mix.Project.config()[:version])
 
       System.halt(0)
     end
