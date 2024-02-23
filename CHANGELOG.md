@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/elixir-tools/tableau_new/compare/v1.0.2...v1.1.0) (2024-02-23)
+
+
+### Features
+
+* --version flag ([b01353f](https://github.com/elixir-tools/tableau_new/commit/b01353fee9adff18f51bd8eec675f63040d75373)), closes [#12](https://github.com/elixir-tools/tableau_new/issues/12)
+
+
+### Bug Fixes
+
+* copy README, formatter.exs, and gitignore ([ccd2ea5](https://github.com/elixir-tools/tableau_new/commit/ccd2ea5d9c8c4562a66a4d5a1ed4e58be12d2776)), closes [#13](https://github.com/elixir-tools/tableau_new/issues/13)
+
 ## [1.0.2](https://github.com/elixir-tools/tableau_new/compare/v1.0.1...v1.0.2) (2024-02-21)
 
 
