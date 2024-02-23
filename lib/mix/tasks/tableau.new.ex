@@ -18,6 +18,8 @@ defmodule Mix.Tasks.Tableau.New do
   @moduledoc @help
   @shortdoc "Generate a new Tableau website"
 
+  @generator_version Mix.Project.config()[:version]
+
   use Mix.Task
 
   def run(argv) do
@@ -48,7 +50,7 @@ defmodule Mix.Tasks.Tableau.New do
     end
 
     if opts[:version] do
-      Mix.shell().info(Mix.Project.config()[:version])
+      Mix.shell().info(@generator_version)
 
       System.halt(0)
     end
