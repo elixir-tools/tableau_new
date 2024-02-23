@@ -11,14 +11,14 @@ mix archive.install hex tableau_new
 ## --help
 
 ```
-mix tableau.new <app_name> [<opts>]
+mix tableau.new <app_name> [<flags>]
 
 Flags
 
---template Template syntax to use. Options are heex, temple, eex. (required)
---assets   Asset framework to use. Options are vanilla, tailwind. (optional, defaults to vanilla)
---help     Shows this help text.
-
+--template    Template syntax to use. Options are heex, temple, eex. (required)
+--assets      Asset framework to use. Options are vanilla, tailwind. (optional, defaults to vanilla)
+--help        Shows this help text.
+--version     Shows task version.
 
 Example
 
