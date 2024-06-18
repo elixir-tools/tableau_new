@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/elixir-tools/tableau_new/compare/v1.1.0...v1.2.0) (2024-06-18)
+
+
+### Features
+
+* add PostLayout ([2e876f1](https://github.com/elixir-tools/tableau_new/commit/2e876f197d47bfe9bcef42cb43046c8156bb4ee5))
+* **temple:** post layout ([dc09c17](https://github.com/elixir-tools/tableau_new/commit/dc09c1786e0e329a6aabbd1ee2efc1e60a42c290))
+
+
+### Bug Fixes
+
+* --version flag generates error in production ([#15](https://github.com/elixir-tools/tableau_new/issues/15)) ([#16](https://github.com/elixir-tools/tableau_new/issues/16)) ([74f0648](https://github.com/elixir-tools/tableau_new/commit/74f0648a85db8dca405f86f57dc1c220d49b204c))
+
 ## [1.1.0](https://github.com/elixir-tools/tableau_new/compare/v1.0.2...v1.1.0) (2024-02-23)
 
 
