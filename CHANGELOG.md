@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/elixir-tools/tableau_new/compare/v1.2.0...v1.2.1) (2024-10-13)
+
+
+### Bug Fixes
+
+* update reloader patterns ([fcd196e](https://github.com/elixir-tools/tableau_new/commit/fcd196eedab74e93dbc11c83e4ca7b24425a3f66))
+
 ## [1.2.0](https://github.com/elixir-tools/tableau_new/compare/v1.1.0...v1.2.0) (2024-06-18)
 
 
