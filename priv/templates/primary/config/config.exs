@@ -2,9 +2,9 @@ import Config
 
 config :tableau, :reloader,
   patterns: [
-    ~r"lib/.*.ex",
-    ~r"(_posts|_pages)/.*.md",<%= if @assets == "tailwind" do %>
-    ~r"assets/.*.(css|js)"<% else %>~r"extra/.*.(css|js)"<% end %>
+    ~r"^lib/.*.ex",
+    ~r"^(_posts|_pages)/.*.md",<%= if @assets == "tailwind" do %>
+    ~r"^assets/.*.(css|js)"<% else %>~r"^extra/.*.(css|js)"<% end %>
   ]
 
 config :web_dev_utils, :reload_log, true
