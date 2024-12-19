@@ -25,7 +25,7 @@ defmodule <%= @app_module %>.MixProject do
       {:tableau, "~> 0.17"}<%= if @assets == "tailwind" do %>,
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev}<% end %><%= if @template == "temple" do %>,
       {:temple, "~> 0.12"}<% end %><%= if @template == "heex" do %>,
-      {:phoenix_live_view, "~> 0.20"}<% end %>
+      {:phoenix_live_view, "~> 1.0"}<% end %>
 
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
