@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/elixir-tools/tableau_new/compare/v1.2.1...v1.3.0) (2024-12-19)
+
+
+### Features
+
+* upgrade LiveView dependency ([#20](https://github.com/elixir-tools/tableau_new/issues/20)) ([fe341b5](https://github.com/elixir-tools/tableau_new/commit/fe341b59c900467c97bfd5337d319a40b0020751))
+
 ## [1.2.1](https://github.com/elixir-tools/tableau_new/compare/v1.2.0...v1.2.1) (2024-10-13)
 
 
