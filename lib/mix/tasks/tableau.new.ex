@@ -83,6 +83,10 @@ defmodule Mix.Tasks.Tableau.New do
       assigns
     )
 
+    Mix.Generator.create_file(Path.join(app, "_pages/.keep"), "")
+    Mix.Generator.create_file(Path.join(app, "_posts/.keep"), "")
+    Mix.Generator.create_file(Path.join(app, "extra/.keep"), "")
+
     for source <- Path.wildcard(Path.join(templates, "primary/**/*.{ex,exs}")) do
       target =
         Path.relative_to(source, Path.join(templates, "primary"))
