@@ -6,14 +6,14 @@ defmodule <%= @app_module %>.RootLayout do
     temple do
       "<!DOCTYPE html>"
 
-      html lang: "en"  do
+      html lang: "en" do
         head do
           meta charset: "utf-8"
           meta http_equiv: "X-UA-Compatible", content: "IE=edge"
           meta name: "viewport", content: "width=device-width, initial-scale=1.0"
 
           title do
-            [@page[:title], <%= inspect(Macro.to_string(@app_module)) %>]
+            [@page[:title], <%= Macro.to_string(@app_module) %>]
             |> Enum.filter(& &1)
             |> Enum.intersperse("|")
             |> Enum.join(" ")
