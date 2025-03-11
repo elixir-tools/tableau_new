@@ -19,10 +19,9 @@ config :temple,
 
 <%= if @assets == "tailwind" do %>
 config :tailwind,
-  version: "3.3.5",
+  version: "4.0.9",
   default: [
     args: ~w(
-    --config=assets/tailwind.config.js
     --input=assets/css/site.css
     --output=_site/css/site.css
     )
