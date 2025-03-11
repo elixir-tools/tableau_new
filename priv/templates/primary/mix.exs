@@ -8,6 +8,7 @@ defmodule <%= @app_module %>.MixProject do
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       compilers: <%= if @template == "temple" do %>[:temple] ++ <% end %>Mix.compilers(),
+      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -29,6 +30,12 @@ defmodule <%= @app_module %>.MixProject do
 
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+    ]
+  end
+
+  defp aliases do
+    [
+      build: ["tableau.build"<%= if @assets == "tailwind" do %>, "tailwind default --minify"<% end %>]
     ]
   end
 end
