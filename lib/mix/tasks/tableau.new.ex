@@ -39,7 +39,7 @@ defmodule Mix.Tasks.Tableau.New do
 
         {:error, unknown} ->
           Mix.shell().error("Unknown options: #{Enum.map_join(unknown, &"--#{&1}")}")
-          raise "Unknown options passed to `mix tableau.new`"
+          System.halt(1)
       end
 
     if opts[:help] do
@@ -91,8 +91,8 @@ defmodule Mix.Tasks.Tableau.New do
       Mix.Generator.copy_template(source, Path.join(app, target), assigns)
     end
 
-    cond do
-      opts[:template] == "temple" ->
+    case opts[:template] do
+      "temple" ->
         for source <- Path.wildcard(Path.join(templates, "temple/**/*.{ex,exs}")) do
           target =
             Path.relative_to(source, Path.join(templates, "temple"))
@@ -101,7 +101,7 @@ defmodule Mix.Tasks.Tableau.New do
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
-      opts[:template] == "heex" ->
+      "heex" ->
         for source <- Path.wildcard(Path.join(templates, "heex/**/*.{ex,exs}")) do
           target =
             Path.relative_to(source, Path.join(templates, "heex"))
@@ -110,7 +110,7 @@ defmodule Mix.Tasks.Tableau.New do
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
-      opts[:template] == "eex" ->
+      "eex" ->
         for source <- Path.wildcard(Path.join(templates, "eex/**/*.{ex,exs}")) do
           target =
             Path.relative_to(source, Path.join(templates, "eex"))
@@ -119,13 +119,22 @@ defmodule Mix.Tasks.Tableau.New do
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
-      true ->
+      nil ->
+        Mix.shell().error("""
+        The --template option is required.
+
+        See help text for more information.
+        """)
+
+        System.halt(1)
+
+      _ ->
         Mix.shell().error("Unknown template value: --template=#{opts[:template]}")
-        raise "Unknown template value: --template=#{opts[:template]}"
+        System.halt(1)
     end
 
-    cond do
-      opts[:assets] == "tailwind" ->
+    case opts[:assets] do
+      "tailwind" ->
         for source <- Path.wildcard(Path.join(templates, "tailwind/**/*.{css,js}")) do
           target =
             Path.relative_to(source, Path.join(templates, "tailwind"))
@@ -134,7 +143,7 @@ defmodule Mix.Tasks.Tableau.New do
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
-      opts[:assets] in ["vanilla", nil] ->
+      assets when assets in ["vanilla", nil] ->
         for source <- Path.wildcard(Path.join(templates, "no_assets/**/*.{css}")) do
           target =
             Path.relative_to(source, Path.join(templates, "no_assets"))
@@ -143,9 +152,29 @@ defmodule Mix.Tasks.Tableau.New do
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
-      true ->
-        Mix.shell().error("Unknown assets value: --assets=#{opts[:assets]}")
-        raise "Unknown assets value: --assets=#{opts[:assets]}"
+      _ ->
+        Mix.shell().error("""
+        Unknown assets value: --assets=#{opts[:assets]}
+
+        See help text for more information.
+        """)
+
+        System.halt(1)
     end
+
+    Mix.shell().info("""
+    Congratulations on your new site!
+
+    Run the following to get started.
+
+    cd #{app}
+    mix deps.get
+
+    # generate your first post
+    mix #{app}.gen.post "My first post"
+
+    # start the dev server
+    mix tableau.server
+    """)
   end
 end
