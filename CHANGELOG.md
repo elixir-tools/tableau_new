@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.4.0](https://github.com/elixir-tools/tableau_new/compare/v1.3.0...v1.4.0) (2025-03-11)
+
+
+### Features
+
+* add mix build alias ([43b3a0a](https://github.com/elixir-tools/tableau_new/commit/43b3a0a15db865fba135357790f1e52f0af1f2a9))
+* create my_site.gen.post task ([4e76589](https://github.com/elixir-tools/tableau_new/commit/4e7658912479ac23b947062e44c80801e80d1174))
+* generate _pages, _posts, and extra directories ([c1bc018](https://github.com/elixir-tools/tableau_new/commit/c1bc018d286a18359354afe0022b15f6ea005e20))
+* improve readme in generated project ([7fdfdc3](https://github.com/elixir-tools/tableau_new/commit/7fdfdc38d63a0cba89062b4d25216aa3204eacba))
+* **tailwind:** update to v4 ([43ffe52](https://github.com/elixir-tools/tableau_new/commit/43ffe522a6f0364609a4eb1ec1c707dab6cd807f))
+
+
+### Bug Fixes
+
+* improve error handling on cli ([baa6290](https://github.com/elixir-tools/tableau_new/commit/baa6290f3cd2c728c81af9b530262133b0a76ee8))
+* **temple:** correctly create site name in title tag ([a792f77](https://github.com/elixir-tools/tableau_new/commit/a792f771013613394060e2d10b61991f450200a1))
+
 ## [1.3.0](https://github.com/elixir-tools/tableau_new/compare/v1.2.1...v1.3.0) (2024-12-19)
 
 
