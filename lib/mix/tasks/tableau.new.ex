@@ -11,7 +11,6 @@ defmodule Mix.Tasks.Tableau.New do
 
   Example
 
-  mix tableau.new my_awesome_site
   mix tableau.new my_awesome_site --template temple
   mix tableau.new my_awesome_site --template eex --assets tailwind
   """
