@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/elixir-tools/tableau_new/compare/v1.4.0...v1.4.1) (2025-03-18)
+
+
+### Bug Fixes
+
+* **tailwind:** remove js config file ([47a846a](https://github.com/elixir-tools/tableau_new/commit/47a846a5e4a0866628f4ceedf1cbe989d5366061))
+
 ## [1.4.0](https://github.com/elixir-tools/tableau_new/compare/v1.3.0...v1.4.0) (2025-03-11)
 
 
