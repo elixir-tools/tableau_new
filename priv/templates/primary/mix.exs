@@ -23,7 +23,7 @@ defmodule <%= @app_module %>.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:tableau, "~> 0.17"}<%= if @assets == "tailwind" do %>,
+      {:tableau, "~> 0.25"}<%= if @assets == "tailwind" do %>,
       {:tailwind, "~> 0.3", runtime: Mix.env() == :dev}<% end %><%= if @template == "temple" do %>,
       {:temple, "~> 0.12"}<% end %><%= if @template == "heex" do %>,
       {:phoenix_live_view, "~> 1.0"}<% end %>

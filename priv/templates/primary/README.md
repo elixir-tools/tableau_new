@@ -11,6 +11,12 @@ mix deps.get
 mix tableau.server
 ```
 
+## Draft Posts and WIP Pages
+
+Posts and pages that are not ready for production can be saved to the `_drafts` and `_wip` directories respectively.
+
+These are controlled via application configuration, as seen in `config/dev.exs` and `config/prod.exs`
+
 ## Production Builds
 
 To build for production, run the `mix build` alias to build your site and compile any assets (depends on what asset you chose when generating your site).
