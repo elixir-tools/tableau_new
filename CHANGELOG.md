@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/elixir-tools/tableau_new/compare/v1.4.1...v1.5.0) (2025-06-24)
+
+
+### Features
+
+* update tableau, mdex, tailwind ([#26](https://github.com/elixir-tools/tableau_new/issues/26)) ([ecfb693](https://github.com/elixir-tools/tableau_new/commit/ecfb6938e7153ac0e2050dd37c72536bbef49021))
+
 ## [1.4.1](https://github.com/elixir-tools/tableau_new/compare/v1.4.0...v1.4.1) (2025-03-18)
 
 
