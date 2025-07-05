@@ -5,7 +5,7 @@
 
 ### Bug Fixes
 
-* **tailwindcss:** remove [@source](https://github.com/source) directive from css file ([#28](https://github.com/elixir-tools/tableau_new/issues/28)) ([bf50e90](https://github.com/elixir-tools/tableau_new/commit/bf50e90c43e77f94d374704e4cd22b7c11d30073))
+* **tailwindcss:** remove `@source` directive from css file ([#28](https://github.com/elixir-tools/tableau_new/issues/28)) ([bf50e90](https://github.com/elixir-tools/tableau_new/commit/bf50e90c43e77f94d374704e4cd22b7c11d30073))
 
 ## [1.5.0](https://github.com/elixir-tools/tableau_new/compare/v1.4.1...v1.5.0) (2025-06-24)
 
