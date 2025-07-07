@@ -102,12 +102,7 @@ defmodule Mix.Tasks.Tableau.New do
     Mix.Generator.create_file(Path.join(app, "extra/.keep"), "")
 
     for source <- Path.wildcard(Path.join(templates, "primary/**/*.{ex,exs}")) do
-      target =
-        source
-        |> Path.relative_to(Path.join(templates, "primary"))
-        |> String.replace("app_name", app)
-
-      Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+      copy_templates(source, templates, "primary", app, assigns)
     end
 
     case opts[:template] do
