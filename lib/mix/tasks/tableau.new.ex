@@ -113,32 +113,17 @@ defmodule Mix.Tasks.Tableau.New do
     case opts[:template] do
       "temple" ->
         for source <- Path.wildcard(Path.join(templates, "temple/**/*.{ex,exs}")) do
-          target =
-            source
-            |> Path.relative_to(Path.join(templates, "temple"))
-            |> String.replace("app_name", app)
-
-          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+          copy_templates(source, templates, "temple", app, assigns)
         end
 
       "heex" ->
         for source <- Path.wildcard(Path.join(templates, "heex/**/*.{ex,exs}")) do
-          target =
-            source
-            |> Path.relative_to(Path.join(templates, "heex"))
-            |> String.replace("app_name", app)
-
-          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+          copy_templates(source, templates, "heex", app, assigns)
         end
 
       template when template in ["eex", nil] ->
         for source <- Path.wildcard(Path.join(templates, "eex/**/*.{ex,exs}")) do
-          target =
-            source
-            |> Path.relative_to(Path.join(templates, "eex"))
-            |> String.replace("app_name", app)
-
-          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+          copy_templates(source, templates, "eex", app, assigns)
         end
 
       value ->
@@ -154,32 +139,17 @@ defmodule Mix.Tasks.Tableau.New do
     case opts[:js] do
       "esbuild" ->
         for source <- Path.wildcard(Path.join(templates, "esbuild/**/*.{css,js}")) do
-          target =
-            source
-            |> Path.relative_to(Path.join(templates, "esbuild"))
-            |> String.replace("app_name", app)
-
-          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+          copy_templates(source, templates, "esbuild", app, assigns)
         end
 
       "bun" ->
         for source <- Path.wildcard(Path.join(templates, "bun/**/*.{css,js,json}")) do
-          target =
-            source
-            |> Path.relative_to(Path.join(templates, "bun"))
-            |> String.replace("app_name", app)
-
-          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+          copy_templates(source, templates, "bun", app, assigns)
         end
 
       js when js in ["vanilla", nil] ->
         for source <- Path.wildcard(Path.join(templates, "no_assets/**/*.{js}")) do
-          target =
-            source
-            |> Path.relative_to(Path.join(templates, "no_assets"))
-            |> String.replace("app_name", app)
-
-          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+          copy_templates(source, templates, "no_assets", app, assigns)
         end
 
       js ->
@@ -195,22 +165,12 @@ defmodule Mix.Tasks.Tableau.New do
     case opts[:css] do
       "tailwind" ->
         for source <- Path.wildcard(Path.join(templates, "tailwind/**/*.{css,js}")) do
-          target =
-            source
-            |> Path.relative_to(Path.join(templates, "tailwind"))
-            |> String.replace("app_name", app)
-
-          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+          copy_templates(source, templates, "tailwind", app, assigns)
         end
 
       css when css in ["vanilla", nil] ->
         for source <- Path.wildcard(Path.join(templates, "no_assets/**/*.{css}")) do
-          target =
-            source
-            |> Path.relative_to(Path.join(templates, "no_assets"))
-            |> String.replace("app_name", app)
-
-          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+          copy_templates(source, templates, "no_assets", app, assigns)
         end
 
       css ->
@@ -237,5 +197,15 @@ defmodule Mix.Tasks.Tableau.New do
     # start the dev server
     mix tableau.server
     """)
+  end
+
+  defp copy_templates(source, templates, app, kind, assigns) do
+    target =
+      source
+      |> Path.relative_to(Path.join(templates, kind))
+      |> String.replace("app_name", app)
+      |> then(&Path.join(app, &1))
+
+    Mix.Generator.copy_template(source, target, assigns)
   end
 end
