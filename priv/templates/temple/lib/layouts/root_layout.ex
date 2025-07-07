@@ -13,13 +13,14 @@ defmodule <%= @app_module %>.RootLayout do
           meta name: "viewport", content: "width=device-width, initial-scale=1.0"
 
           title do
-            [@page[:title], <%= Macro.to_string(@app_module) %>]
+            [@page[:title], <%= @app %>]
             |> Enum.filter(& &1)
             |> Enum.intersperse("|")
             |> Enum.join(" ")
           end
 
           link rel: "stylesheet", href: "/css/site.css"
+          script src: "/js/site.js"
         end
 
         body do

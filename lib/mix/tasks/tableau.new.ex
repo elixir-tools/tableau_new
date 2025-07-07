@@ -4,15 +4,16 @@ defmodule Mix.Tasks.Tableau.New do
 
   Flags
 
-  --template    Template syntax to use. Options are heex, temple, eex. (required)
-  --assets      Asset framework to use. Options are vanilla, tailwind. (optional, defaults to vanilla)
+  --template    Template syntax to use. Options are heex, temple, eex. (optional, defaults to eex)
+  --js          JS bundler to use. Options are vanilla, bun, esbuild (optional, defaults to vanilla)
+  --css         Asset framework to use. Options are vanilla, tailwind. (optional, defaults to vanilla)
   --help        Shows this help text.
   --version     Shows task version.
 
   Example
 
-  mix tableau.new my_awesome_site --template temple
-  mix tableau.new my_awesome_site --template eex --assets tailwind
+  mix tableau.new my_awesome_site
+  mix tableau.new my_awesome_site --template temple --js bun --css tailwind
   """
   @moduledoc @help
   @shortdoc "Generate a new Tableau website"
@@ -25,7 +26,8 @@ defmodule Mix.Tasks.Tableau.New do
     {opts, argv} =
       OptionParser.parse!(argv,
         strict: [
-          assets: :string,
+          js: :string,
+          css: :string,
           template: :string,
           help: :boolean,
           version: :boolean
@@ -33,7 +35,7 @@ defmodule Mix.Tasks.Tableau.New do
       )
 
     opts =
-      case Keyword.validate(opts, [:assets, :template, help: false, version: false]) do
+      case Keyword.validate(opts, [:css, :js, :template, help: false, version: false]) do
         {:ok, opts} ->
           opts
 
@@ -56,13 +58,21 @@ defmodule Mix.Tasks.Tableau.New do
 
     [app | _] = argv
     Mix.Generator.create_directory(app)
-    templates = Path.join(:code.priv_dir(:tableau_new), "templates")
+    templates = :tableau_new |> :code.priv_dir() |> Path.join("templates")
+
+    css =
+      if opts[:js] == "bun" and opts[:css] == "tailwind" do
+        "tailwind-bun"
+      else
+        opts[:css]
+      end
 
     assigns = [
       app: app,
       app_module: Macro.camelize(app),
       template: opts[:template],
-      assets: opts[:assets]
+      js: opts[:js],
+      css: css
     ]
 
     Mix.Generator.copy_template(
@@ -84,12 +94,17 @@ defmodule Mix.Tasks.Tableau.New do
     )
 
     Mix.Generator.create_file(Path.join(app, "_pages/.keep"), "")
+    Mix.Generator.create_file(Path.join(app, "_wip/.keep"), "")
+
     Mix.Generator.create_file(Path.join(app, "_posts/.keep"), "")
+    Mix.Generator.create_file(Path.join(app, "_draft/.keep"), "")
+
     Mix.Generator.create_file(Path.join(app, "extra/.keep"), "")
 
     for source <- Path.wildcard(Path.join(templates, "primary/**/*.{ex,exs}")) do
       target =
-        Path.relative_to(source, Path.join(templates, "primary"))
+        source
+        |> Path.relative_to(Path.join(templates, "primary"))
         |> String.replace("app_name", app)
 
       Mix.Generator.copy_template(source, Path.join(app, target), assigns)
@@ -99,7 +114,8 @@ defmodule Mix.Tasks.Tableau.New do
       "temple" ->
         for source <- Path.wildcard(Path.join(templates, "temple/**/*.{ex,exs}")) do
           target =
-            Path.relative_to(source, Path.join(templates, "temple"))
+            source
+            |> Path.relative_to(Path.join(templates, "temple"))
             |> String.replace("app_name", app)
 
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
@@ -108,57 +124,98 @@ defmodule Mix.Tasks.Tableau.New do
       "heex" ->
         for source <- Path.wildcard(Path.join(templates, "heex/**/*.{ex,exs}")) do
           target =
-            Path.relative_to(source, Path.join(templates, "heex"))
+            source
+            |> Path.relative_to(Path.join(templates, "heex"))
             |> String.replace("app_name", app)
 
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
-      "eex" ->
+      template when template in ["eex", nil] ->
         for source <- Path.wildcard(Path.join(templates, "eex/**/*.{ex,exs}")) do
           target =
-            Path.relative_to(source, Path.join(templates, "eex"))
+            source
+            |> Path.relative_to(Path.join(templates, "eex"))
             |> String.replace("app_name", app)
 
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
-      nil ->
+      value ->
         Mix.shell().error("""
-        The --template option is required.
+        Unknown template value: --template=#{value}
 
         See help text for more information.
         """)
 
         System.halt(1)
+    end
 
-      _ ->
-        Mix.shell().error("Unknown template value: --template=#{opts[:template]}")
+    case opts[:js] do
+      "esbuild" ->
+        for source <- Path.wildcard(Path.join(templates, "esbuild/**/*.{css,js}")) do
+          target =
+            source
+            |> Path.relative_to(Path.join(templates, "esbuild"))
+            |> String.replace("app_name", app)
+
+          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+        end
+
+      "bun" ->
+        for source <- Path.wildcard(Path.join(templates, "bun/**/*.{css,js,json}")) do
+          target =
+            source
+            |> Path.relative_to(Path.join(templates, "bun"))
+            |> String.replace("app_name", app)
+
+          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+        end
+
+      js when js in ["vanilla", nil] ->
+        for source <- Path.wildcard(Path.join(templates, "no_assets/**/*.{js}")) do
+          target =
+            source
+            |> Path.relative_to(Path.join(templates, "no_assets"))
+            |> String.replace("app_name", app)
+
+          Mix.Generator.copy_template(source, Path.join(app, target), assigns)
+        end
+
+      js ->
+        Mix.shell().error("""
+        Unknown js value: --js=#{js}
+
+        See help text for more information.
+        """)
+
         System.halt(1)
     end
 
-    case opts[:assets] do
+    case opts[:css] do
       "tailwind" ->
         for source <- Path.wildcard(Path.join(templates, "tailwind/**/*.{css,js}")) do
           target =
-            Path.relative_to(source, Path.join(templates, "tailwind"))
+            source
+            |> Path.relative_to(Path.join(templates, "tailwind"))
             |> String.replace("app_name", app)
 
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
-      assets when assets in ["vanilla", nil] ->
+      css when css in ["vanilla", nil] ->
         for source <- Path.wildcard(Path.join(templates, "no_assets/**/*.{css}")) do
           target =
-            Path.relative_to(source, Path.join(templates, "no_assets"))
+            source
+            |> Path.relative_to(Path.join(templates, "no_assets"))
             |> String.replace("app_name", app)
 
           Mix.Generator.copy_template(source, Path.join(app, target), assigns)
         end
 
-      _ ->
+      css ->
         Mix.shell().error("""
-        Unknown assets value: --assets=#{opts[:assets]}
+        Unknown css value: --css=#{css}
 
         See help text for more information.
         """)

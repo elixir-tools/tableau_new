@@ -3,7 +3,7 @@ import Config
 config :tableau, :reloader,
   patterns: [
     ~r"^lib/.*.ex",
-    ~r"^(_posts|_pages)/.*.md",<%= if @assets == "tailwind" do %>
+    ~r"^(_posts|_pages)/.*.md",<%= if @css == "tailwind" or @js == "esbuild" do %>
     ~r"^assets/.*.(css|js)"<% else %>~r"^extra/.*.(css|js)"<% end %>
   ]
 
@@ -15,9 +15,15 @@ config :web_dev_utils, :reload_log, true
 config :temple,
   engine: EEx.SmartEngine,
   attributes: {Temple, :attributes}
-<% end %>
-
-<%= if @assets == "tailwind" do %>
+<% end %><%= if @js == "esbuild" do %>
+config :esbuild,
+  version: "0.25.5",
+  default: [
+    args: ~w(js/site.js --bundle --target=es2016 --outdir=../_site/js),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+<% end %><%= if @css == "tailwind" do %>
 config :tailwind,
   version: "4.1.0",
   default: [
@@ -26,9 +32,32 @@ config :tailwind,
     --output=_site/css/site.css
     )
   ]
-
-config :tableau, :assets, tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
-<% end %>
+<% end %><%= if @js == "bun" do %>
+config :bun,
+  version: "1.2.4",
+  install: [
+    args: ~w(install)
+  ],
+  default: [
+    args: ~w(
+    build 
+    assets/js/site.js  
+    --outdir=_site/js
+    )
+  ]<% end %><%= if @css == "tailwind-bun" do %>,
+  css: [
+    args: ~w(
+    run tailwindcss
+    --input=assets/css/site.css
+    --output=_site/css/site.css
+    )
+  ]<% end %>
+config :tableau, :assets, [<%= if @css == "tailwind" do %>
+  tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]},<% end %><%= if @js == "esbuild" do %>
+  esbuild: {Esbuild, :install_and_run, [:default, ~w(--watch)]},<% end %><%= if @js == "bun" do %>
+  bun: {Bun, :install_and_run, [:default, ~w(--watch)]},<% end %><%= if @css == "tailwind-bun" do %>
+  tailwind: {Bun, :install_and_run, [:css, ~w(--watch)]},<% end %>
+]
 
 config :tableau, :config,
   url: "http://localhost:4999",
