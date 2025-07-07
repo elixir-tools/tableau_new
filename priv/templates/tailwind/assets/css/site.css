@@ -1,1 +1,14 @@
 @import "tailwindcss"
+
+/* 
+DaisyUI (http://daisyui.com) provides useful components that can 
+help to build faster with Tableau and Tailwind.
+
+To install DaisyUI, first run the command `npm i -D daisyui@latest`. 
+
+Then uncomment the @plugin line below.  
+
+More info: https://daisyui.com/docs/install/ 
+*/ 
+
+/* @plugin "daisyui"; */
