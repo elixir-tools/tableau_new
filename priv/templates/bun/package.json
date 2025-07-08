@@ -1,0 +1,12 @@
+{
+  "name": "<%= @app %>",
+  "main": "site.js",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "dependencies": {<%= if @css == "tailwind-bun" do %>
+    "tailwindcss": "^4.1.0",
+    "@tailwindcss/cli": "^4.1.0",
+    "@tailwindcss/typography": "^0.5.16"<% end %>
+  }
+}
