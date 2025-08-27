@@ -194,7 +194,7 @@ defmodule Mix.Tasks.Tableau.New do
     """)
   end
 
-  defp copy_templates(source, templates, app, kind, assigns) do
+  defp copy_templates(source, templates, kind, app, assigns) do
     target =
       source
       |> Path.relative_to(Path.join(templates, kind))
