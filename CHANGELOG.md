@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/elixir-tools/tableau_new/compare/v2.0.0...v2.0.1) (2025-08-27)
+
+
+### Bug Fixes
+
+* put files in the correct directory ([516a5a8](https://github.com/elixir-tools/tableau_new/commit/516a5a811c4bf9b1b0af4a9b85d8a9466224410b))
+
 ## [2.0.0](https://github.com/elixir-tools/tableau_new/compare/v1.5.1...v2.0.0) (2025-08-25)
 
 
