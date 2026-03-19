@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/elixir-tools/tableau_new/compare/v2.0.1...v2.0.2) (2026-03-19)
+
+
+### Bug Fixes
+
+* **temple:** wrap [@app](https://github.com/app) in string in root layout template. ([#42](https://github.com/elixir-tools/tableau_new/issues/42)) ([bfc660c](https://github.com/elixir-tools/tableau_new/commit/bfc660cd95aff2e78ac72e4ed8bd1c89b787862f))
+
 ## [2.0.1](https://github.com/elixir-tools/tableau_new/compare/v2.0.0...v2.0.1) (2025-08-27)
 
 
